@@ -28,8 +28,7 @@ At this point in the curriculum students will have set up their SDC Term 2 envir
     * ```sudo apt-get install gfortran```
     *  ```apt-get install unzip```
     * ```wget https://www.coin-or.org/download/source/Ipopt/Ipopt-3.12.7.zip && unzip Ipopt-3.12.7.zip && rm Ipopt-3.12.7.zip```
-    * Call `install_ipopt.sh` with the source directory as the first argument, ex: ```./install_ipopt.sh Ipopt-3.12.7``` or ```bash install_ipopt.sh Ipopt-3.12.7```
-
+    * Call `install_ipopt.sh` with the source directory as the first argument, ex: ```./install_ipopt.sh Ipopt-3.12.7``` or ```bash install_ipopt.sh Ipopt-3.12.7``` (Attention: pesonally, I faced installation problem when using this two instructions. And finally used `sudo ./install_ipopt.sh Ipopt-3.12.7` and solved the problem. [Here is forum link](https://discussions.udacity.com/t/fatal-error-coin-ipipoptapplication-hpp-no-such-file-or-directory/470426/20)
   * **Windows:** For Windows environments there are two main options
     * Follow Linux instructions in the Ubuntu Bash environment. Please not that install instructions should be executed from the repository directory.  Changing to a Windows directory (ie ```cd /mnt/c .....```) can result in installation issues, particularly for Windows directories that contain spaces.
     * Use the docker container described [here](https://classroom.udacity.com/nanodegrees/nd013/parts/40f38239-66b6-46ec-ae68-03afd8a601c8/modules/0949fca6-b379-42af-a919-ee50aa304e6a/lessons/f758c44c-5e40-4e01-93b5-1a82aa4e044f/concepts/16cf4a78-4fc7-49e1-8621-3450ca938b77), which comes pre-configured with Ipopt.
