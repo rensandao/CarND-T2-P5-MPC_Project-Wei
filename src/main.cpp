@@ -104,9 +104,6 @@ int main() {
           vector<double> ptsx_;
           vector<double> ptsy_;
 
-          // transform waypoints to be from car's perspective
-          // this means we can consider px = 0, py = 0, and psi = 0
-          // greatly simplifying future calculations
           for (size_t i = 0; i < ptsx.size(); i++) {
             ptsx_.push_back((ptsx[i] - px) * cos(-psi) - (ptsy[i] - py) * sin(-psi));
             ptsy_.push_back((ptsx[i] - px) * sin(-psi) + (ptsy[i] - py) * cos(-psi));
@@ -130,7 +127,6 @@ int main() {
           auto vars = mpc.Solve(state, coeffs);
           steer_value = vars[0];
           throttle_value = vars[1];
-    
 
           json msgJson;
           // NOTE: Remember to divide by deg2rad(25) before you send the steering value back.
@@ -151,7 +147,6 @@ int main() {
             }
           }
 
-          
           //.. add (x,y) points to list here, points are in reference to the vehicle's coordinate system
           // the points in the simulator are connected by a Green line
 
