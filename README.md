@@ -2,6 +2,31 @@
 Self-Driving Car Engineer Nanodegree Program
 
 ---
+## Rubric points
+* The Model
+(Student describes their model in detail. This includes the state, actuators and update equations.)
+
+
+* Timestep Length and Elapsed Duration (N & dt)
+
+I finally set timestep lenght N=10 and elapsed duration between timesteps dt=0.1. Honestly, this set of values is based on slack groups' suggestion. This means the interval time T is one second between trajectory predictions. N, dt are hyperparameters we need to tune for each model predictive controller. T should be a few seconds, at most. Besides above values, other value for N and dt included 20/0.05. When N was
+too large, mpc need more time to calculate, which may leads higher errors.
+
+* Polynomial Fitting and MPC Preprocessing
+
+To simplyfy the calculation process, firstly transform waypoints coordinates into the vehicle's perspective(code lines 107-110 in main.cpp). Car's orgin coordinates turned to be at the (0,0) and the orientional angel is 0.
+
+* Model Predictive Control with Latency
+
+The student implements Model Predictive Control that handles a 100 millisecond latency. Student provides details on how they deal with latency.
+
+The approach to dealing with latency was twofold (not counting simply limiting the speed): the original kinematic equations depend upon the actuations from the previous timestep, but with a delay of 100ms (which happens to be the timestep interval) the actuations are applied another timestep later, so the equations have been altered to account for this (MPC.cpp lines 104-107). Also, in addition to the cost functions suggested in the lessons (punishing CTE, epsi, difference between velocity and a reference velocity, delta, acceleration, change in delta, and change in acceleration) an additional cost penalizing the combination of velocity and delta (MPC.cpp line 63) was included and results in much more controlled cornering.
+
+A contributing factor to latency is actuator dynamics. For example the time elapsed between when command a steering angle to when that angle is actually achieved.
+
+One approach caring the latency is that MPC's kinematic equations is based on the actuations from previous timestep. Because the latency, t  
+
+
 
 ## Dependencies
 
