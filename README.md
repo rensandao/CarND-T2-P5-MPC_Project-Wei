@@ -6,7 +6,10 @@ Self-Driving Car Engineer Nanodegree Program
 1) The Model
 (Student describes their model in detail. This includes the state, actuators and update equations.)
 
-constraint.png
+<img src="model.jpeg" width="400px">  <img src="mode_equ.jpeg" width="400px">
+
+Lf represents the distance from the center of the mass of the vehicle to the front.
+f(x) is the evaluation of the polynomial f at point x and psidest is the tangencial angle of the polynomial f evaluated at x.
 
 2) Timestep Length and Elapsed Duration (N & dt)
 
