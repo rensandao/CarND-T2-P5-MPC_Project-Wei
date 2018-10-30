@@ -115,8 +115,8 @@ int main() {
           //fit a polynomial to the coordinates;
           auto coeffs = polyfit(ptsx_, ptsy_, 3);  //1?
 */
-          vector<double> waypoints_x;
-          vector<double> waypoints_y;
+          vector<double> ptsx_;
+          vector<double> ptsy_;
 
           // transform waypoints to be from car's perspective
           // this means we can consider px = 0, py = 0, and psi = 0
@@ -124,17 +124,17 @@ int main() {
           for (size_t i = 0; i < ptsx.size(); i++) {
             double dx = ptsx[i] - px;
             double dy = ptsy[i] - py;
-            waypoints_x.push_back(dx * cos(-psi) - dy * sin(-psi));
-            waypoints_y.push_back(dx * sin(-psi) + dy * cos(-psi));
+            ptsx_.push_back(dx * cos(-psi) - dy * sin(-psi));
+            ptsy_.push_back(dx * sin(-psi) + dy * cos(-psi));
           }
 
-          double* ptrx = &waypoints_x[0];
-          double* ptry = &waypoints_y[0];
-          Eigen::Map<Eigen::VectorXd> waypoints_x_eig(ptrx, 6);
-          Eigen::Map<Eigen::VectorXd> waypoints_y_eig(ptry, 6);
+          double* ptrx = &ptsx_[0];
+          double* ptry = &ptsy_[0];
+          Eigen::Map<Eigen::VectorXd> waypoints_x(ptrx, 6);
+          Eigen::Map<Eigen::VectorXd> waypoints_y(ptry, 6);
           
           // fit the polynomial to the above waypoints coordinates
-          auto coeffs = polyfit(waypoints_x_eig, waypoints_y_eig, 3);
+          auto coeffs = polyfit(waypoints_x, waypoints_y, 3);
 
           //calculate the cross track and orientation error
           double cte = polyeval(coeffs, 0) - 0; //px, py = 0 
@@ -142,47 +142,6 @@ int main() {
 
           Eigen::VectorXd state(6);
           state << 0, 0, 0, v, cte, epsi;
-/*
-          //steer_value, throttle_value = mpc.Solve(state, coeffs);
-
-          std::vector<double> x_vals = {state[0]};
-          std::vector<double> y_vals = {state[1]};
-          std::vector<double> psi_vals = {state[2]};
-          std::vector<double> v_vals = {state[3]};
-          std::vector<double> cte_vals = {state[4]};
-          std::vector<double> epsi_vals = {state[5]};
-          std::vector<double> delta_vals = {};
-          std::vector<double> a_vals = {};
-          
-          size_t iters = 25;
-          for (size_t i = 0; i < iters; i++) {
-            std::cout << "Iteration " << i << std::endl;
-
-            auto vars = mpc.Solve(state, coeffs);
-
-            x_vals.push_back(vars[0]);
-            y_vals.push_back(vars[1]);
-            psi_vals.push_back(vars[2]);
-            v_vals.push_back(vars[3]);
-            cte_vals.push_back(vars[4]);
-            epsi_vals.push_back(vars[5]);
-
-            delta_vals.push_back(vars[6]);
-            a_vals.push_back(vars[7]);
-
-            state << vars[0], vars[1], vars[2], vars[3], vars[4], vars[5];
-            std::cout << "x = " << vars[0] << std::endl;
-            std::cout << "y = " << vars[1] << std::endl;
-            std::cout << "psi = " << vars[2] << std::endl;
-            std::cout << "v = " << vars[3] << std::endl;
-            std::cout << "cte = " << vars[4] << std::endl;
-            std::cout << "epsi = " << vars[5] << std::endl;
-            std::cout << "delta = " << vars[6] << std::endl;
-            std::cout << "a = " << vars[7] << std::endl;
-            std::cout << std::endl;
-          }
-*/
-
 
           auto vars = mpc.Solve(state, coeffs);
           steer_value = vars[0];
@@ -244,6 +203,7 @@ int main() {
           //
           // NOTE: REMEMBER TO SET THIS TO 100 MILLISECONDS BEFORE
           // SUBMITTING.
+
           this_thread::sleep_for(chrono::milliseconds(100));
           ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
         }
