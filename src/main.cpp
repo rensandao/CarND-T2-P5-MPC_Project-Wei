@@ -100,21 +100,7 @@ int main() {
           * Both are in between [-1, 1].
           *
           */
-          /*
-          //Change vector<double> into the form of Eigen::VectorXd 
-          Eigen::VectorXd ptsx_(ptsx.size());
-          for (size_t i = 0; i < ptsx.size(); i++) {
-            ptsx_[i] = cos(psi) * (ptsx[i] - px) + sin(psi) * (ptsy[i] - py);
-          }
 
-          Eigen::VectorXd ptsy_(ptsx.size());
-          for (size_t i = 0; i < ptsy.size(); i++) {
-            ptsy_[i] = -sin(psi) * (ptsx[i] - px) + cos(psi) * ( ptsy[i] - py);
-          }
-          
-          //fit a polynomial to the coordinates;
-          auto coeffs = polyfit(ptsx_, ptsy_, 3);  //1?
-*/
           vector<double> ptsx_;
           vector<double> ptsy_;
 
@@ -122,10 +108,8 @@ int main() {
           // this means we can consider px = 0, py = 0, and psi = 0
           // greatly simplifying future calculations
           for (size_t i = 0; i < ptsx.size(); i++) {
-            double dx = ptsx[i] - px;
-            double dy = ptsy[i] - py;
-            ptsx_.push_back(dx * cos(-psi) - dy * sin(-psi));
-            ptsy_.push_back(dx * sin(-psi) + dy * cos(-psi));
+            ptsx_.push_back((ptsx[i] - px) * cos(-psi) - (ptsy[i] - py) * sin(-psi));
+            ptsy_.push_back((ptsx[i] - px) * sin(-psi) + (ptsy[i] - py) * cos(-psi));
           }
 
           double* ptrx = &ptsx_[0];
