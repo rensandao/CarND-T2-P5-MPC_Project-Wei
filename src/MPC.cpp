@@ -6,7 +6,8 @@
 using CppAD::AD;
 
 // TODO: Set the timestep length and duration
-//How? Usually,T = N*dt,should be several seconds at most.
+//How? Usually,T = N*dt,should be several seconds at most. 
+//T=10*0.1=1s, a little smaller?
 size_t N = 10;//10;//25;
 double dt = 0.1;//0.1;//0.05;
 
